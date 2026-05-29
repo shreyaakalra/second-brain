@@ -16,8 +16,10 @@ app.post('/sign-up', async(req, res) => {
     try{
         const validationResult = userSignupSchema.safeParse(req.body);
 
-        if(!validationResult.success){
-            return res.status(411).json(validationResult.error)
+        if (!validationResult.success) {
+            return res.status(400).json({
+                errors: validationResult.error
+            });
         }
         
         const { name, email, password } = validationResult.data;
@@ -51,7 +53,7 @@ app.post('/sign-up', async(req, res) => {
             {expiresIn: '10h'}
         )
 
-        res.status(200).json(token);
+        res.status(200).json({token});
 
 
     } catch(err){

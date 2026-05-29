@@ -3,7 +3,7 @@ import { z } from "zod";
 export const userSignupSchema = z.object({
     name: z.string()
         .min(3, { message: "Username must be at least 3 characters long." })
-        .max(10, { message: "Username cannot exceed 10 characters." }),
+        .max(100, { message: "Username cannot exceed 100 characters." }),
     
     email: z.string()
         .email({ message: "Invalid email address format." }),
