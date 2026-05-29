@@ -53,7 +53,9 @@ app.post('/sign-up', async(req, res) => {
             {expiresIn: '10h'}
         )
 
-        res.status(200).json({token});
+        res.status(200).json({
+            "token": token
+        });
 
 
     } catch(err){
@@ -63,6 +65,57 @@ app.post('/sign-up', async(req, res) => {
         console.log(err);
     } 
 })
+
+app.post('/sign-in', async(req, res) => {
+    try{
+        const { email, password } = req.body;
+
+        if(!email || !password){
+            return res.status(411).json({
+                "error": "pls enter an email and password."
+            })
+        }
+
+        const user = await User.findOne({email});
+
+        if(!user){
+            return res.status(403).json({
+                "error": "User doesn't exist. Sign-up first."
+            })
+        }
+
+        const passwordCheck = await bcrypt.compare(password, user.password);
+
+        if(!passwordCheck){
+            return res.status(403).json({
+                "error": "Incorrect password"
+            })
+        }
+
+        const key = process.env.SECRET_KEY;
+
+        if(!key){
+            return res.status(411).json({
+                "error": "env variable missing"
+            })
+        }
+
+        const token = jwt.sign(
+            {id: user._id},
+            key,
+            {expiresIn: "10h"}
+        )
+
+        return res.status(200).json({
+            "token": token
+        })
+
+    } catch(err){
+        res.status(500).json({
+            "error": "Internal Server Error"
+        })
+    }
+});
 
 connectDB();
 
