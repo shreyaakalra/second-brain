@@ -64,7 +64,7 @@ app.post('/sign-up', async(req, res) => {
         });
         console.log(err);
     } 
-})
+});
 
 app.post('/sign-in', async(req, res) => {
     try{
@@ -115,6 +115,10 @@ app.post('/sign-in', async(req, res) => {
             "error": "Internal Server Error"
         })
     }
+});
+
+app.post('/add-content', (req, res) => {
+    
 });
 
 connectDB();
