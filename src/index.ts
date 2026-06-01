@@ -162,6 +162,31 @@ app.post('/add-content', authMiddleware, async(req: AuthRequest, res) => {
 
 });
 
+app.get('/get-content', authMiddleware, async(req: AuthRequest, res) => {
+    try{
+         const user = req.userId;
+
+        if(!user){
+            return res.status(403).json({
+                "error": "User access forbidden"
+            })
+        }
+
+        const content = await Content.find({owner: user});
+
+        res.status(200).json({
+            "content": content
+        });
+
+    } catch(err){
+        console.log(err);
+        return res.status(500).json({
+            "error": "Internal server error"
+        })
+    }
+   
+});
+
 
 
 connectDB();
