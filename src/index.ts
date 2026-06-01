@@ -294,6 +294,7 @@ app.get('/get-content/:link', async(req, res) => {
         const content = await Content.find({owner: user._id});
 
         res.status(200).json({
+            "username": user.name,
             "content": content
         })
 
