@@ -1,43 +1,51 @@
-import jwt from "jsonwebtoken";
+import type { Request, Response, NextFunction} from "express"
+import jwt from "jsonwebtoken"
 import "dotenv/config";
-import type { Request, Response, NextFunction } from "express";
 
 export interface AuthRequest extends Request{
-    userId?: string;
+    userId: String
 }
 
-export default function authMiddleware(req: AuthRequest, res: Response, next:NextFunction){
 
+export default function authMiddleware(req: AuthRequest, res: Response, next: NextFunction){
     try{
-        const token = req.headers.authorization.split(" ")[1];
+        const authHeader = req.headers.authorization;
+        
+        if(!authHeader){
+            return res.status(411).json({
+                "error": "token is missing"
+            })
+        }
+
+        const token = authHeader.split(" ")[1];
 
         if(!token){
             return res.status(411).json({
                 "error": "token is missing"
-            });
+            })
         }
 
         const key = process.env.SECRET_KEY;
 
         if(!key){
-            return res.status(403).json({
-                "error": "secret key is missing"
+            return res.status(411).json({
+                "error": "secret key is misisng"
             })
         }
 
         const decoded = jwt.verify(token, key);
 
-        if(!decoded){
+        if(!decoded || typeof decoded === "string"){
             return res.status(403).json({
-                "error": "token verification failed."
+                "error": "secret key is missing"
             })
         }
 
         req.userId = decoded.id;
 
         next();
-    }
-    catch(err){
+
+    } catch(err){
         res.status(500).json({
             "error": "Internal Server Error"
         })
