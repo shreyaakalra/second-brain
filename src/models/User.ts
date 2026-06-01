@@ -5,6 +5,8 @@ export interface Iuser extends Document{
     name: string,
     email:  string,
     password: string,
+    shareLink: string | null,
+    share: boolean,
     createdAt: Date,
     updatedAt: Date
 }
@@ -22,6 +24,14 @@ const userSchema = new Schema<Iuser>({
     password: {
         type: String,
         required: true
+    },
+    shareLink: {
+        type: String,
+        default: null
+    },
+    share: {
+        type: Boolean,
+        default: false
     }
 },{
     timestamps: true

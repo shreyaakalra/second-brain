@@ -8,6 +8,7 @@ import { userSignupSchema } from "./validators.js";
 import authMiddleware, { type AuthRequest } from "./middlewares/authMiddleware.js";
 import mongoose from "mongoose";
 import Content from "./models/Content.js";
+import crypto from "crypto"
 
 const app = express();
 const PORT = 5001;
@@ -186,6 +187,54 @@ app.get('/get-content', authMiddleware, async(req: AuthRequest, res) => {
     }
    
 });
+
+app.delete('/delete/:id', authMiddleware, async(req: AuthRequest, res) => {
+    try{
+        const contentID = req.params.id;
+
+        if(!contentID){
+            return res.status(411).json({
+                "error": "pls mention the id"
+            })
+        }
+
+        const user = req.userId;
+
+        if(!user){
+            return res.status(403).json({
+                "error": "user is forbidden"
+            })
+        }
+
+        const content = await Content.findById(contentID);
+
+        if(!content){
+            return res.status(411).json({
+                "error": "there is no content by that id"
+            })
+        }
+
+        if(String(content.owner)!==(user)){
+            return res.status(403).json({
+                "error": "you're not allowed to access this content"
+            })
+        }
+
+        await Content.findByIdAndDelete(contentID);
+
+        res.status(200).json({
+            "message": "Deleted successfully"
+        });
+
+    } catch(err){
+        console.log(err);
+        return res.status(500).json({
+            "error": "internal server error"
+        })
+    }
+})
+
+
 
 
 
