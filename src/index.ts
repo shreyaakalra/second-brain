@@ -153,10 +153,10 @@ app.post('/add-content', authMiddleware, async(req: AuthRequest, res) => {
         });
 
     } catch(err){
+        console.log(err);
         res.status(500).json({
             "error": "Internal Server Error"
         })
-        console.log(err);
     }
     
 
