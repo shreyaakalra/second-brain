@@ -3,9 +3,9 @@ const { Schema } = mongoose;
 
 export interface Icontent extends Document{
     link: string,
-    content: string,
+    type: string,
     title: string,
-    tags: [Types.ObjectId],
+    tags: string[],
     owner: Types.ObjectId
 }
 
@@ -17,7 +17,7 @@ const contentSchema = new Schema<Icontent>({
         unique: true,
         required: true
     }, 
-    content: {
+    type: {
         type: String,
         enum: contentTypes,
         required: true
@@ -27,8 +27,7 @@ const contentSchema = new Schema<Icontent>({
         required: true
     }, 
     tags: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Tags'
+        type: String
     }],
     owner: {
         type: mongoose.Schema.Types.ObjectId,

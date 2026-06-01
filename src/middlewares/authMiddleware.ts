@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken"
 import "dotenv/config";
 
 export interface AuthRequest extends Request{
-    userId: String
+    userId?: string
 }
 
 

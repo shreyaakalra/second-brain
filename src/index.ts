@@ -5,6 +5,9 @@ import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
 import "dotenv/config"
 import { userSignupSchema } from "./validators.js";
+import authMiddleware, { type AuthRequest } from "./middlewares/authMiddleware.js";
+import mongoose from "mongoose";
+import Content from "./models/Content.js";
 
 const app = express();
 const PORT = 5001;
@@ -117,9 +120,49 @@ app.post('/sign-in', async(req, res) => {
     }
 });
 
-app.post('/add-content', (req, res) => {
+app.post('/add-content', authMiddleware, async(req: AuthRequest, res) => {
+
+    try{
+        const { title, type, link, tags } = req.body;
+
+        if(!title || !type || !link ){
+            return res.status(411).json({
+                "error": "add all the proper information"
+            })
+        }
+
+        const user = req.userId;
+
+        if(!user){
+            return res.status(403).json({
+                "error": "User doesnt exist bruh"
+            })
+        }
+
+        const newContent = await Content.create({
+            link,
+            type,
+            title,
+            tags,
+            owner: user
+
+        });
+
+        res.status(200).json({
+            "message": "Content added successfully"
+        });
+
+    } catch(err){
+        res.status(500).json({
+            "error": "Internal Server Error"
+        })
+        console.log(err);
+    }
     
+
 });
+
+
 
 connectDB();
 
