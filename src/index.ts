@@ -272,7 +272,39 @@ app.post('/get-link', authMiddleware, async(req: AuthRequest, res) => {
 
 })
 
+app.get('/get-content/:link', async(req, res) => {
 
+    try{
+        const link = req.params.link;
+
+        if(!link){
+            return res.status(411).json({
+                "error": "you haven't given any link"
+            })
+        }
+
+        const user = await User.findOne({shareLink: link});
+
+        if(!user){
+            return res.status(404).json({
+                "Error": "No user with that link exists"
+            })
+        }
+
+        const content = await Content.find({owner: user._id});
+
+        res.status(200).json({
+            "content": content
+        })
+
+    } catch(err){
+        console.log(err);
+        res.status(500).json({
+            "error": "Internal server error"
+        })
+    }
+
+})
 
 
 
