@@ -234,6 +234,44 @@ app.delete('/delete/:id', authMiddleware, async(req: AuthRequest, res) => {
     }
 })
 
+app.post('/get-link', authMiddleware, async(req: AuthRequest, res) => {
+
+    try{
+        const { share } = req.body;
+        const user = req.userId;
+
+        if(!user){
+            return res.status(403).json({
+                "error": "yeap you're not authorized"
+            })
+        }
+
+        if(share===false){
+            await User.findByIdAndUpdate(user, { shareLink: null })
+            return res.status(200).json({ message: "Brain is now private" });
+
+        }
+
+        const shareLink = crypto.randomBytes(16).toString("hex");
+
+        await User.findByIdAndUpdate(
+            user,
+            {shareLink: shareLink},
+        )
+        
+        res.status(200).json({
+            "link": shareLink
+        })
+
+    } catch(err){
+        console.log(err);
+        return res.status(500).json({
+            "error": "Internal server error"
+        })
+    }
+
+})
+
 
 
 
