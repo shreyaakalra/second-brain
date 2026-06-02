@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardAction, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Link } from "react-router-dom";
 
 
 export default function SignUp() {
@@ -17,7 +18,9 @@ export default function SignUp() {
               Enter your email below to create your new account
             </CardDescription>
             <CardAction>
-              <Button variant="link">Sign In</Button>
+              <Link to="/sign-in">
+                <Button variant="link">Sign In</Button>
+              </Link>
             </CardAction>
             <CardContent>
               <form>
@@ -54,7 +57,7 @@ export default function SignUp() {
                   </div>
                 </div>
               </form>
-              <Button className="mt-8 font-bold w-full h-9">
+              <Button variant="ghost" className="mt-8 font-bold w-full h-9 bg-yellow-600 text-white hover:border-black">
                 Create Account
               </Button>
             </CardContent>
@@ -66,7 +69,7 @@ export default function SignUp() {
       </div>
 
       <div className="hidden md:block md:w-2/4">
-        <img src="/green.jpg" className="w-full h-full object-cover" />
+        <img src="/yellow.jpg" className="w-full h-full object-cover" />
       </div>
     </div>
   );
