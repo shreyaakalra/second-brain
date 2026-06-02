@@ -1,5 +1,8 @@
 import { cn } from "@/lib/utils";
 import { CanvasText } from "./ui/canvas-text";
+import { Input } from "./ui/input";
+import { Button } from "./ui/button";
+import { Link } from "react-router-dom";
 
 export default function Hero(){
     return(
@@ -33,7 +36,21 @@ export default function Hero(){
                 <p className="mx-auto mt-4 max-w-2xl text-center text-xl leading-8 font-semibold tracking-tight text-balance text-neutral-600">
                   A dedicated home for your "I'll read this later" pile. Drop in articles, videos, and threads, and let your Second Brain remember everything so you don't have to.
                 </p>
-            </div>
+             </div>
+             <div className="flex flex-row gap-2 justify-center items-center mt-5">
+              <Input 
+                className="mx-auto mt-4 w-100 h-10 border-2 border-yellow-600"
+                placeholder="Add your first link today"
+              />
+              <Link to="/check-demo">
+                    <Button variant="ghost" className="bg-yellow-600 text-white h-10 w-30 mt-4 font-bold hover:border-black"
+                    >
+                      Check Demo
+                    </Button>
+              </Link>
+              
+             </div>
+             
         </div>
     );
 }
