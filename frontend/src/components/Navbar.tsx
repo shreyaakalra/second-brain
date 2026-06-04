@@ -26,7 +26,6 @@ export default function Navbar() {
         </motion.div>
       </Link>
 
-      {/* Buttons */}
       <div className="flex items-center gap-3">
         <Link to="/sign-in">
           <motion.button
