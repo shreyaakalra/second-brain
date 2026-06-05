@@ -15,14 +15,17 @@ export default function SignUp() {
   const navigate = useNavigate();
 
   async function handleSubmit(){
-    // 1. call api.post
-    const response = await api.post("/sign-up", form);
-    // 2. save token
-    const {token} = response.data;
-    localStorage.setItem("token", token);
-    // 3. navigate to dashboard
-    navigate('/dashboard');
-
+    try{
+      // 1. call api.post
+      const response = await api.post("/sign-up", form);
+      // 2. save token
+      const {token} = response.data;
+      localStorage.setItem("token", token);
+      // 3. navigate to dashboard
+      navigate('/dashboard');
+    } catch(err){
+      console.log(err);
+    }
   }
  
   return (
