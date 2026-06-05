@@ -1,10 +1,29 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Brain, ArrowRight } from "lucide-react";
+import api from "@/lib/api";
 
 export default function SignIn() {
-  const [form, setForm] = useState({ email: "", password: "" });
+  const [form, setForm] = useState({
+    email: "",
+    password: ""
+  });
+
+  const navigate = useNavigate();
+
+  async function handleSubmit(){
+    try{
+      const response = await api.post('/sign-in', form);
+      const {token} = response.data;
+      localStorage.setItem("token", token);
+      navigate('/dashboard');
+
+    } catch(err){
+      console.log(err);
+    }
+    
+  }
 
   return (
     <div className="flex h-screen bg-white overflow-hidden">
@@ -94,7 +113,7 @@ export default function SignIn() {
               type="email"
               placeholder="you@example.com"
               value={form.email}
-              onChange={e => setForm({ ...form, email: e.target.value })}
+              onChange={(e) => {setForm({...form, email: e.target.value})}}
               className="px-4 py-3 border-2 border-black rounded-xl text-sm font-medium placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-yellow-400 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] transition-shadow"
             />
           </div>
@@ -104,7 +123,7 @@ export default function SignIn() {
               type="password"
               placeholder="Your password"
               value={form.password}
-              onChange={e => setForm({ ...form, password: e.target.value })}
+              onChange={(e) => {setForm({...form, password: e.target.value})}}
               className="px-4 py-3 border-2 border-black rounded-xl text-sm font-medium placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-yellow-400 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] transition-shadow"
             />
           </div>
@@ -113,6 +132,7 @@ export default function SignIn() {
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.97 }}
             className="mt-2 flex items-center justify-center gap-2 w-full py-3 bg-black border-2 border-black rounded-xl font-black text-sm text-white shadow-[4px_4px_0px_0px_rgba(234,179,8,1)] hover:bg-neutral-800 hover:shadow-[2px_2px_0px_0px_rgba(234,179,8,1)] transition-all"
+            onClick={handleSubmit}
           >
             Log In
             <ArrowRight className="w-4 h-4" />
