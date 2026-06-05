@@ -6,14 +6,15 @@ import jwt from "jsonwebtoken"
 import "dotenv/config"
 import { userSignupSchema } from "./validators.js";
 import authMiddleware, { type AuthRequest } from "./middlewares/authMiddleware.js";
-import mongoose from "mongoose";
 import Content from "./models/Content.js";
 import crypto from "crypto"
+import cors from "cors"
 
 const app = express();
 const PORT = 5001;
 
 app.use(express.json());
+app.use(cors());
 
 app.post('/sign-up', async(req, res) => {
 

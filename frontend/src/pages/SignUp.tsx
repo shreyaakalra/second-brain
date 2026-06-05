@@ -1,10 +1,29 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Brain, ArrowRight } from "lucide-react";
+import { useState } from "react";
+import api from "@/lib/api";
  
 export default function SignUp() {
-  const [form, setForm] = useState({ name: "", email: "", password: "" });
+
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    password: ""
+  })
+
+  const navigate = useNavigate();
+
+  async function handleSubmit(){
+    // 1. call api.post
+    const response = await api.post("/sign-up", form);
+    // 2. save token
+    const {token} = response.data;
+    localStorage.setItem("token", token);
+    // 3. navigate to dashboard
+    navigate('/dashboard');
+
+  }
  
   return (
     <div className="flex h-screen bg-white overflow-hidden">
@@ -12,7 +31,6 @@ export default function SignUp() {
       {/* Left - Form */}
       <div className="w-full md:w-1/2 flex flex-col justify-center px-8 sm:px-16 relative z-10">
  
-        {/* Logo */}
         <Link to="/">
           <motion.div
             initial={{ opacity: 0, x: -20 }}
@@ -29,7 +47,6 @@ export default function SignUp() {
           </motion.div>
         </Link>
  
-        {/* Heading */}
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
@@ -50,7 +67,6 @@ export default function SignUp() {
           </p>
         </motion.div>
  
-        {/* Form */}
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
@@ -63,7 +79,7 @@ export default function SignUp() {
               type="text"
               placeholder="Your name"
               value={form.name}
-              onChange={e => setForm({ ...form, name: e.target.value })}
+              onChange={(e)=>{setForm({...form, name:e.target.value})}}
               className="px-4 py-3 border-2 border-black rounded-xl text-sm font-medium placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-yellow-400 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] transition-shadow"
             />
           </div>
@@ -73,7 +89,7 @@ export default function SignUp() {
               type="email"
               placeholder="you@example.com"
               value={form.email}
-              onChange={e => setForm({ ...form, email: e.target.value })}
+              onChange={(e) => {setForm({...form, email: e.target.value})}}
               className="px-4 py-3 border-2 border-black rounded-xl text-sm font-medium placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-yellow-400 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] transition-shadow"
             />
           </div>
@@ -83,7 +99,7 @@ export default function SignUp() {
               type="password"
               placeholder="Min 8 characters"
               value={form.password}
-              onChange={e => setForm({ ...form, password: e.target.value })}
+              onChange={(e) => {setForm({...form, password: e.target.value})}}
               className="px-4 py-3 border-2 border-black rounded-xl text-sm font-medium placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-yellow-400 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] transition-shadow"
             />
           </div>
@@ -92,6 +108,7 @@ export default function SignUp() {
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.97 }}
             className="mt-2 flex items-center justify-center gap-2 w-full py-3 bg-yellow-400 border-2 border-black rounded-xl font-black text-sm shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:bg-yellow-500 hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transition-all"
+            onClick={handleSubmit}
           >
             Create Account
             <ArrowRight className="w-4 h-4" />
