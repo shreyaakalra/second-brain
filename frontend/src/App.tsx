@@ -9,8 +9,6 @@ export default function App(){
         <div className="pt-16">
           <Hero />
         </div>
-
-       
       </div>  
   )
 }
