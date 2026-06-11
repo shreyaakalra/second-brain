@@ -15,7 +15,9 @@ const placeholderCards: ContentCardType[] = [
   { _id: "5", title: "Lo-fi beats to code to", type: "audio", link: "https://example.com", tags: ["music", "focus"] },
 ];
 
-export default function Dashboard() {
+
+
+export default function Dashboard({name, email}) {
   const [activeFilter, setActiveFilter] = useState("all");
   const [search, setSearch] = useState("");
   const [cards, setCards] = useState<ContentCardType[]>(placeholderCards);
@@ -48,6 +50,8 @@ export default function Dashboard() {
         <AppSidebar
           activeFilter={activeFilter}
           setActiveFilter={setActiveFilter}
+          name={name}
+          email={email}
         />
 
         <div className="flex flex-col flex-1 min-w-0">

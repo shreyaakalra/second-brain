@@ -16,6 +16,8 @@ const PORT = 5001;
 app.use(express.json());
 app.use(cors());
 
+connectDB();
+
 app.post('/sign-up', async(req, res) => {
 
     try{
@@ -307,10 +309,6 @@ app.get('/get-content/:link', async(req, res) => {
     }
 
 })
-
-
-
-connectDB();
 
 app.listen(PORT, () => {
     console.log("Server is running at port 5001");

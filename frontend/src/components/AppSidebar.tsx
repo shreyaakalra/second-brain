@@ -23,11 +23,11 @@ const navItems = [
 interface AppSidebarProps {
   activeFilter: string;
   setActiveFilter: (type: string) => void;
-  username?: string;
+  name?: string;
   email?: string;
 }
 
-export default function AppSidebar({ activeFilter, setActiveFilter, username = "User", email = "" }: AppSidebarProps) {
+export default function AppSidebar({ activeFilter, setActiveFilter, name, email}: AppSidebarProps) {
   return (
     <Sidebar collapsible="offcanvas" className="border-r-2 border-black">
       <SidebarHeader className="p-6 border-b-2 border-black">
@@ -72,10 +72,10 @@ export default function AppSidebar({ activeFilter, setActiveFilter, username = "
       <SidebarFooter className="p-4 border-t-2 border-black">
         <div className="flex items-center gap-3 px-2">
           <div className="w-9 h-9 rounded-full bg-yellow-400 border-2 border-black flex items-center justify-center font-black text-sm shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
-            {username[0]?.toUpperCase() ?? "U"}
+            {name[0]?.toUpperCase() ?? "U"}
           </div>
           <div>
-            <p className="font-black text-sm text-black">{username}</p>
+            <p className="font-black text-sm text-black">{name}</p>
             <p className="text-xs text-neutral-500">{email}</p>
           </div>
         </div>
