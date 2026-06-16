@@ -1,15 +1,24 @@
-import { Brain,LayoutGrid, Video, XIcon } from "lucide-react";
+import { Brain, FileText,Headphones,LayoutGrid, Video, XIcon, Image } from "lucide-react";
 import { Sidebar, SidebarContent, SidebarFooter, SidebarGroup, SidebarGroupContent, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "./ui/sidebar";
 import {
   Avatar,
   AvatarFallback,
 } from "./ui/avatar"
 
+const navItems = [
+  {label: "All Notes", icon: LayoutGrid, type: "all"},
+  {label: "Articles", icon: FileText, type: "article"},
+  {label: "Tweets", icon: XIcon, type: "tweet"},
+  {label: "Youtube", icon: Video, type: "youtube"},
+  {label: "Images", icon: Image, type: "image"},
+  {label: "Audio", icon: Headphones, type: "audio"},
+]
+
 
 export default function AppSidebar(){
   return(
     <div>
-      <Sidebar>
+      <Sidebar collapsible="offcanvas" className="border-2">
 
         <SidebarHeader className="p-6 border-b-2">
           <div className="flex items-center gap-2">
@@ -26,34 +35,23 @@ export default function AppSidebar(){
           <SidebarGroup>
             <SidebarGroupContent>
               <SidebarMenu className="flex flex-col gap-2">
-
-                <SidebarMenuItem>
-                  <SidebarMenuButton className="w-full h-12 flex items-center gap-3 px-3 py-2.5 rounded-xl font-bold text-sm border-2 transition-all cursor-pointer">
-                    <LayoutGrid />
-                    All Notes
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-
-                <SidebarMenuItem>
-                  <SidebarMenuButton className="w-full h-12 flex items-center gap-3 px-3 py-2.5 rounded-xl font-bold text-sm border-2 transition-all cursor-pointer">
-                    <Video />
-                    Youtube
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-
-                <SidebarMenuItem>
-                  <SidebarMenuButton className="w-full h-12 flex items-center gap-3 px-3 py-2.5 rounded-xl font-bold text-sm border-2 transition-all cursor-pointer">
-                    <XIcon />
-                    Tweets
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-
+                {navItems.map((item) => {
+                  const Icon = item.icon;
+                  return(
+                    <SidebarMenuItem key={item.label}>
+                      <SidebarMenuButton className="w-full h-12 flex items-center gap-3 px-3 py-2.5 rounded-xl font-bold text-sm border-2 transition-all cursor-pointer">
+                        <Icon />
+                        {item.label}
+                      </SidebarMenuButton>
+                    </SidebarMenuItem>
+                  )
+                })}
               </SidebarMenu>
             </SidebarGroupContent>
           </SidebarGroup>
         </SidebarContent>
 
-        <SidebarFooter className="p-4 border-t-2 border-black/50">
+        <SidebarFooter className="p-4 border-t-2 border-t-2">
           <div className="flex items-center gap-3 px-2">
             <div>
               <Avatar className="h-10 w-10 border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
