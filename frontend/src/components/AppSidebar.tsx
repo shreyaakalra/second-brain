@@ -5,6 +5,7 @@ import {
   AvatarFallback,
 } from "./ui/avatar"
 
+
 const navItems = [
   {label: "All Notes", icon: LayoutGrid, type: "all"},
   {label: "Articles", icon: FileText, type: "article"},
