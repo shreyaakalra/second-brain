@@ -52,7 +52,7 @@ export default function AppSidebar(){
           </SidebarGroup>
         </SidebarContent>
 
-        <SidebarFooter className="p-4 border-t-2 border-t-2">
+        <SidebarFooter className="p-4 border-t-2">
           <div className="flex items-center gap-3 px-2">
             <div>
               <Avatar className="h-10 w-10 border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">

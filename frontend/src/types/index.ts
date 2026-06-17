@@ -1,4 +1,4 @@
-export interface ContentCard {
+export interface ContentCardType {
   _id: string;
   title: string;
   type: "article" | "tweet" | "video" | "image" | "audio";
