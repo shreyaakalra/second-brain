@@ -1,9 +1,10 @@
+import AddContentModal from "@/components/AddContentModal";
 import AppSidebar from "@/components/AppSidebar";
 import ContentCard from "@/components/ContentCard";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import type { ContentCardType } from "@/types";
 import { motion } from "framer-motion";
-import { Plus, Search } from "lucide-react";
+import { Brain, Plus, Search } from "lucide-react";
 import { useState } from "react";
 
 const placeholderCards: ContentCardType[] = [
@@ -15,6 +16,7 @@ const placeholderCards: ContentCardType[] = [
 ];
 
 export default function Dashboard(){
+
   const [activeFilter, setActiveFilter] = useState("all");
   const [search, setSearch] = useState(" ");
   const [cards, setCards] = useState<ContentCardType[]>(placeholderCards);
@@ -23,10 +25,14 @@ export default function Dashboard(){
     const matchesType = activeFilter === "all" || c.type === activeFilter;
     const matchesSearch = c.title.toLowerCase().includes(search.toLowerCase());
     return matchesType && matchesSearch;
-  })
+  });
 
+  const handleDelete = (id: string) => {
+    setCards(prev => prev.filter(c => c._id !== id))
+  }
 
   
+
   return(
     <SidebarProvider>
 
@@ -68,14 +74,32 @@ export default function Dashboard(){
 
           {/* Content grid div */}
           <main className="flex-1 overflow-y-auto p-6 ">
+            
             <p className="text-sm font-bold text-neutral-500 mb-4">
-              5 items
+              {filtered.length} {filtered.length===1 ? "item" : "items"}
             </p>
 
-            <ContentCard />
+            {filtered.length === 0 ? (
+              <div>
+                <div>
+                  <Brain className="w-8 h-8 text-yellow-600" />
+                </div>
+              </div>
+            ): (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                {filtered.map(card => (
+                  <ContentCard key={card._id} card={card} onDelete={handleDelete} />
+                ))}
+              </div>
+            )}
+
           </main>
 
         </div>
+
+          <AddContentModal
+
+          />
 
       </div>
 
