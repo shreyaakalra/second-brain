@@ -15,8 +15,15 @@ const navItems = [
   {label: "Audio", icon: Headphones, type: "audio"},
 ]
 
+interface AppSidebarProps {
+  activeFilter: string;
+  setActiveFilter: (type: string) => void;
+  name?: string;
+  email?: string;
+}
 
-export default function AppSidebar(){
+
+export default function AppSidebar({activeFilter, setActiveFilter, name, email}: AppSidebarProps){
   return(
     <div>
       <Sidebar collapsible="offcanvas" className="border-2">
@@ -38,11 +45,22 @@ export default function AppSidebar(){
               <SidebarMenu className="flex flex-col gap-2">
                 {navItems.map((item) => {
                   const Icon = item.icon;
+                  const isActive = activeFilter === item.type;
                   return(
                     <SidebarMenuItem key={item.label}>
-                      <SidebarMenuButton className="w-full h-12 flex items-center gap-3 px-3 py-2.5 rounded-xl font-bold text-sm border-2 transition-all cursor-pointer">
+                      <SidebarMenuButton 
+                        onClick={() => setActiveFilter(item.type)} 
+                        className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl font-bold text-sm border-2 transition-all cursor-pointer
+                          ${isActive
+                            ? "bg-yellow-400 border-black shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] text-black"
+                            : "border-transparent hover:border-black hover:bg-yellow-50 text-neutral-600"
+                          }
+                        `}
+                      >
+                        
                         <Icon />
                         {item.label}
+                        
                       </SidebarMenuButton>
                     </SidebarMenuItem>
                   )
@@ -57,13 +75,15 @@ export default function AppSidebar(){
             <div>
               <Avatar className="h-10 w-10 border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
                 <AvatarFallback className="text-black font-extrabold">
-                  U
+                  {name && name.length!==0 ? name[0].toUpperCase() : "U"}
                 </AvatarFallback>
               </Avatar>
             </div>
             <div>
-              <p className="font-black text-sm">abcd</p>
-              <p className="text-xs text-neutral-700">abcd@gmail.com</p>
+              <p className="font-black text-sm">
+                {name}
+              </p>
+              <p className="text-xs text-neutral-700">{email}</p>
             </div>
           </div>
           

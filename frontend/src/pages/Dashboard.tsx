@@ -15,7 +15,7 @@ const placeholderCards: ContentCardType[] = [
   { _id: "5", title: "Lo-fi beats to code to", type: "audio", link: "https://example.com", tags: ["music", "focus"] },
 ];
 
-export default function Dashboard(){
+export default function Dashboard({ name, email } : {name: string, email: string} ){
 
   const [activeFilter, setActiveFilter] = useState("all");
   const [search, setSearch] = useState(" ");
@@ -31,15 +31,19 @@ export default function Dashboard(){
     setCards(prev => prev.filter(c => c._id !== id))
   }
 
-  
-
   return(
     <SidebarProvider>
 
       <div className="flex h-screen w-full bg-neutral-50 overflow-hidden">
 
         {/* left sidebar div */}
-        <AppSidebar />
+        <AppSidebar
+          activeFilter={activeFilter}
+          setActiveFilter={setActiveFilter}
+          name={name}
+          email={email}
+
+        />
 
         {/* Header + content grid */}
         <div className="flex flex-col flex-1 min-w-0">
@@ -80,17 +84,30 @@ export default function Dashboard(){
             </p>
 
             {filtered.length === 0 ? (
-              <div>
-                <div>
+
+              // what to show if nothing exists
+              <div className="flex flex-col items-center justify-center h-64 gap-3">
+
+                <div className="w-16 h-16 bg-yellow-100 border-2 border-black rounded-2 flex items-center justify-center shadow-[3px_3px_0px_0px_rgba(0,0,0,1)]">
                   <Brain className="w-8 h-8 text-yellow-600" />
                 </div>
+
+                <p className="font-black text-black text-lg">Nothing here yet</p>
+
+                <p className="text-sm text-neutral-500">Add some content to get started</p>
+
               </div>
-            ): (
+
+            ) : (
+
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                
                 {filtered.map(card => (
                   <ContentCard key={card._id} card={card} onDelete={handleDelete} />
                 ))}
+
               </div>
+
             )}
 
           </main>
