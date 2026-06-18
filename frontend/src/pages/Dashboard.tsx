@@ -20,6 +20,8 @@ export default function Dashboard({ name, email } : {name: string, email: string
   const [activeFilter, setActiveFilter] = useState("all");
   const [search, setSearch] = useState(" ");
   const [cards, setCards] = useState<ContentCardType[]>(placeholderCards);
+  const [showModal, setShowModal] = useState(false);
+  
 
   const filtered = cards.filter((c) => {
     const matchesType = activeFilter === "all" || c.type === activeFilter;
@@ -30,6 +32,7 @@ export default function Dashboard({ name, email } : {name: string, email: string
   const handleDelete = (id: string) => {
     setCards(prev => prev.filter(c => c._id !== id))
   }
+
 
   return(
     <SidebarProvider>
@@ -69,6 +72,7 @@ export default function Dashboard({ name, email } : {name: string, email: string
               whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.97 }}
               className="ml-auto flex flex-row items-center gap-2 border-2 border-black rounded-xl px-4 py-2 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] bg-yellow-400 hover:bg-yellow-500 transition-all font-black text-sm "
+              onClick={()=>setShowModal(true)}
             >
               <Plus className="w-4 h-4" />
               Add Content
@@ -115,6 +119,8 @@ export default function Dashboard({ name, email } : {name: string, email: string
         </div>
 
           <AddContentModal
+            open={showModal}
+            onClose={() => setShowModal(false)}
 
           />
 
