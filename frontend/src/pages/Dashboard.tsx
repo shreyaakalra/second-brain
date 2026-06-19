@@ -19,7 +19,7 @@ const placeholderCards: ContentCardType[] = [
 
 
 
-export default function Dashboard({ name, email } : {name: string, email: 
+export default function Dashboard({ name, email } : {name?: string, email?: 
   string} ){
 
   const navigate = useNavigate();
