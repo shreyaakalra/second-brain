@@ -19,7 +19,7 @@ export default function AddContentModal({open, onClose, onAdd} : contentModelPro
     type: "article",
     link: "",
     title: "",
-    tags: []
+    tags: [] as string[]
   })
 
   async function submitForm(){
