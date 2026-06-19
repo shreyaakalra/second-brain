@@ -11,10 +11,13 @@ import crypto from "crypto"
 import cors from "cors"
 
 const app = express();
-const PORT = 5001;
+const PORT = process.env.PORT || 5001;
 
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+    origin: ["https://second-brain-xyz.vercel.app", "http://localhost:5173"],
+    credentials: true
+}));
 
 connectDB();
 
