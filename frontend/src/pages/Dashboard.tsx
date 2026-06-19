@@ -25,7 +25,7 @@ export default function Dashboard({ name, email } : {name: string, email:
   const navigate = useNavigate();
 
   const [activeFilter, setActiveFilter] = useState("all");
-  const [search, setSearch] = useState(" ");
+  const [search, setSearch] = useState("");
   const [cards, setCards] = useState<ContentCardType[]>(placeholderCards);
   const [showModal, setShowModal] = useState(false);
 
@@ -62,6 +62,10 @@ export default function Dashboard({ name, email } : {name: string, email:
 
   const handleDelete = (id: string) => {
     setCards(prev => prev.filter(c => c._id !== id))
+  }
+
+  const handleAdd = (newCard: ContentCardType) => {
+    setCards(prev => [newCard, ...prev]);
   }
 
 
@@ -152,7 +156,7 @@ export default function Dashboard({ name, email } : {name: string, email:
           <AddContentModal
             open={showModal}
             onClose={() => setShowModal(false)}
-
+            onAdd={handleAdd}
           />
 
       </div>

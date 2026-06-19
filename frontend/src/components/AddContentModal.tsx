@@ -2,15 +2,17 @@ import api from "@/lib/api";
 import { AnimatePresence, motion } from "framer-motion";
 import { X } from "lucide-react";
 import { useState } from "react";
+import type { ContentCardType} from "../types/index"
 
 interface contentModelProps{
   open: boolean;
   onClose: () => void;
+  onAdd: (newCard: ContentCardType) => void;
 }
 
-const contentTypes = ["article", "tweet", "video", "image", "youtube"];
+const contentTypes = ["article", "tweet", "video", "image", "audio"];
 
-export default function AddContentModal({open, onClose} : contentModelProps){
+export default function AddContentModal({open, onClose, onAdd} : contentModelProps){
 
   
   const[form, setForm] = useState({
@@ -25,6 +27,8 @@ export default function AddContentModal({open, onClose} : contentModelProps){
       const response = await api.post("/add-content",form, {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
       });
+
+      onAdd(response.data.content);
     }
 
     catch(e){

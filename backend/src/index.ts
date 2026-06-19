@@ -153,7 +153,8 @@ app.post('/add-content', authMiddleware, async(req: AuthRequest, res) => {
         });
 
         res.status(200).json({
-            "message": "Content added successfully"
+            "message": "Content added successfully",
+            "content": newContent
         });
 
     } catch(err){
