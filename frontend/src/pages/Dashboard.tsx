@@ -2,10 +2,12 @@ import AddContentModal from "@/components/AddContentModal";
 import AppSidebar from "@/components/AppSidebar";
 import ContentCard from "@/components/ContentCard";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import api from "@/lib/api";
 import type { ContentCardType } from "@/types";
 import { motion } from "framer-motion";
 import { Brain, Plus, Search } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const placeholderCards: ContentCardType[] = [
   { _id: "1", title: "How to build a second brain", type: "article", link: "https://example.com", tags: ["productivity", "learning"] },
@@ -15,12 +17,41 @@ const placeholderCards: ContentCardType[] = [
   { _id: "5", title: "Lo-fi beats to code to", type: "audio", link: "https://example.com", tags: ["music", "focus"] },
 ];
 
-export default function Dashboard({ name, email } : {name: string, email: string} ){
+
+
+export default function Dashboard({ name, email } : {name: string, email: 
+  string} ){
+
+  const navigate = useNavigate();
 
   const [activeFilter, setActiveFilter] = useState("all");
   const [search, setSearch] = useState(" ");
   const [cards, setCards] = useState<ContentCardType[]>(placeholderCards);
   const [showModal, setShowModal] = useState(false);
+
+  useEffect(() => {
+    async function fetchContent(){
+      try {
+        const tokenValue = localStorage.getItem("token");
+
+        if(!tokenValue){
+          navigate("/sign-in");
+          return;
+        }
+
+        const response = await api.get("/get-content", {
+          headers: { Authorization: `Bearer ${tokenValue}` }
+        });
+
+        setCards(response.data.content);
+
+      } catch(e){
+        console.log(e);
+      }
+    }
+
+    fetchContent();
+  }, [])
   
 
   const filtered = cards.filter((c) => {

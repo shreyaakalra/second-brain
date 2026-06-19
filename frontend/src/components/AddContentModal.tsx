@@ -14,7 +14,7 @@ export default function AddContentModal({open, onClose} : contentModelProps){
 
   
   const[form, setForm] = useState({
-    type: "",
+    type: "article",
     link: "",
     title: "",
     tags: []
