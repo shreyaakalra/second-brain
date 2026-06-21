@@ -5,8 +5,11 @@ export interface Icontent extends Document{
     link: string,
     type: string,
     title: string,
-    tags: string[],
-    owner: Types.ObjectId
+    tags?: string[],
+    owner: Types.ObjectId,
+    previewImage?: string,
+    previewTitle?: string,
+    previewDescription?: string
 }
 
 const contentTypes = ['image', 'video', 'article', 'audio', 'tweet'];
@@ -33,6 +36,18 @@ const contentSchema = new Schema<Icontent>({
         type: mongoose.Schema.Types.ObjectId,
         required: true,
         ref: 'User'
+    },
+    previewImage: {
+        type: String,
+        unique: true
+    },
+    previewTitle: {
+        type: String,
+        unique: true
+    },
+    previewDescription: {
+        type: String,
+        unique: true
     }
 
 }, {
