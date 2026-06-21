@@ -15,7 +15,11 @@ const PORT = process.env.PORT || 5001;
 
 app.use(express.json());
 app.use(cors({
-    origin: ["https://second-brain-xyz.vercel.app", "http://localhost:5173"],
+    origin: [
+        "https://second-brain-ochre-sigma.vercel.app",
+        "https://second-brain-git-main-shreyaakalras-projects.vercel.app",
+        "http://localhost:5173"
+    ],
     credentials: true
 }));
 
@@ -315,5 +319,5 @@ app.get('/get-content/:link', async(req, res) => {
 })
 
 app.listen(PORT, () => {
-    console.log("Server is running at port 5001");
+    console.log(`Server is running at port ${PORT}`);
 })
