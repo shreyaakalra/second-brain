@@ -249,7 +249,7 @@ app.post('/get-link', authMiddleware, async(req: AuthRequest, res) => {
 
         if(!user){
             return res.status(403).json({
-                "error": "yeap you're not authorized"
+                "error": "yeap! you're not authorized"
             })
         }
 

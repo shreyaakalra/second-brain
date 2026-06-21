@@ -29,6 +29,13 @@ export default function Dashboard({ name, email } : {name?: string, email?:
   const [cards, setCards] = useState<ContentCardType[]>(placeholderCards);
   const [showModal, setShowModal] = useState(false);
 
+  const[form, setForm] = useState({
+    type: "article",
+    link: "",
+    title: "",
+    tags: [] as string[]
+  })
+
   useEffect(() => {
     async function fetchContent(){
       try {
@@ -142,7 +149,11 @@ export default function Dashboard({ name, email } : {name?: string, email?:
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 
                 {filtered.map(card => (
-                  <ContentCard key={card._id} card={card} onDelete={handleDelete} />
+                  <ContentCard 
+                    key={card._id} 
+                    card={card} 
+                    onDelete={handleDelete} 
+                  />
                 ))}
 
               </div>
@@ -157,6 +168,8 @@ export default function Dashboard({ name, email } : {name?: string, email?:
             open={showModal}
             onClose={() => setShowModal(false)}
             onAdd={handleAdd}
+            form={form}
+            setForm={setForm}
           />
 
       </div>

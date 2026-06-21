@@ -1,26 +1,22 @@
 import api from "@/lib/api";
 import { AnimatePresence, motion } from "framer-motion";
 import { X } from "lucide-react";
-import { useState } from "react";
 import type { ContentCardType} from "../types/index"
 
 interface contentModelProps{
   open: boolean;
   onClose: () => void;
   onAdd: (newCard: ContentCardType) => void;
+  form: { type: string; link: string; title: string; tags: string[] };
+  setForm : (form: any) => void;
 }
 
 const contentTypes = ["article", "tweet", "video", "image", "audio"];
 
-export default function AddContentModal({open, onClose, onAdd} : contentModelProps){
 
-  
-  const[form, setForm] = useState({
-    type: "article",
-    link: "",
-    title: "",
-    tags: [] as string[]
-  })
+
+export default function AddContentModal({open, onClose, onAdd, form, setForm} : contentModelProps){
+
 
   async function submitForm(){
     try{

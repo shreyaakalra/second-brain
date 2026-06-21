@@ -22,6 +22,8 @@ interface ContentCardProps {
   onDelete: (id: string) => void;
 }
 
+
+
 export default function ContentCard({card, onDelete}: ContentCardProps){
 
   return(
@@ -38,7 +40,7 @@ export default function ContentCard({card, onDelete}: ContentCardProps){
 
         <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
 
-          <a href="https://www.google.com/" className="p-1.5 rounded-lg hover:bg-neutral-100 transition-colors"
+          <a href={card.link} target="_blank" rel="noopener noreferrer" className="p-1.5 rounded-lg hover:bg-neutral-100 transition-colors"
           >
             <ExternalLink className="w-3.5 h-3.5 text-neutral-500" />
           </a>
@@ -51,6 +53,7 @@ export default function ContentCard({card, onDelete}: ContentCardProps){
 
       {/* title */}
       <p className=" font-black text-black leading snug">{card.title}</p>
+      
 
       {/* tags */}
       {card.tags.length > 0 && (
