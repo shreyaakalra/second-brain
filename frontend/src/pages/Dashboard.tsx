@@ -58,9 +58,18 @@ export default function Dashboard({ name, email } : {name?: string, email?: stri
     return matchesType && matchesSearch;
   });
 
-  const handleDelete = (id: string) => {
-    setCards(prev => prev.filter(c => c._id !== id))
+  const handleDelete = async(id: string) => {
+  try {
+    await api.delete(`/delete/${id}`, {
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
+      });
+    
+    setCards(prev => prev.filter(c => c._id !== id));
+    
+  } catch(e) {
+    console.log(e);
   }
+}
 
   const handleAdd = (newCard: ContentCardType) => {
     setCards(prev => [newCard, ...prev]);

@@ -8,7 +8,7 @@ interface contentModelProps{
   onClose: () => void;
   onAdd: (newCard: ContentCardType) => void;
   form: { type: string; link: string; title: string; tags: string[] };
-  setForm : (form: any) => void;
+  setForm : (form: unknown) => void;
 }
 
 const contentTypes = ["article", "tweet", "video", "image", "audio"];
