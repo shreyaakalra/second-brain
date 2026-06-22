@@ -9,6 +9,7 @@ import authMiddleware, { type AuthRequest } from "./middlewares/authMiddleware.j
 import Content from "./models/Content.js";
 import crypto from "crypto"
 import cors from "cors"
+import { fetchMetadata } from "./fetchMetadata.js";
 
 const app = express();
 const PORT = process.env.PORT || 5001;
@@ -150,13 +151,17 @@ app.post('/add-content', authMiddleware, async(req: AuthRequest, res) => {
             })
         }
 
+        const metadata = await fetchMetadata(link);
+
         const newContent = await Content.create({
             link,
             type,
             title,
             tags,
-            owner: user
-
+            owner: user,
+            ...(metadata.previewImage && { previewImage: metadata.previewImage }),
+            ...(metadata.previewTitle && { previewTitle: metadata.previewTitle }),
+            ...(metadata.previewDescription && { previewDescription: metadata.previewDescription }),
         });
 
         res.status(200).json({
