@@ -54,7 +54,7 @@ export default function ContentCard({card, onDelete}: ContentCardProps){
       {/* title */}
       <p className=" font-black text-black leading snug">{card.title}</p>
 
-      {card.previewImage && <img src={card.previewImage} />}
+      {card.previewImage && <img src={card.previewImage} className="w-full h-40 object-cover rounded-lg" />}
       
 
       {/* tags */}
