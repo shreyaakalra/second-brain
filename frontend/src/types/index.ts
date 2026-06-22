@@ -4,4 +4,7 @@ export interface ContentCardType {
   type: "article" | "tweet" | "video" | "image" | "audio";
   link: string;
   tags: string[];
+  previewImage?: string;
+  previewTitle?: string;
+  previewDescription?: string;
 }
