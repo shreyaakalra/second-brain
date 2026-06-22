@@ -9,18 +9,9 @@ import { Brain, Plus, Search } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const placeholderCards: ContentCardType[] = [
-  { _id: "1", title: "How to build a second brain", type: "article", link: "https://example.com", tags: ["productivity", "learning"] },
-  { _id: "2", title: "The best tweet I ever saved", type: "tweet", link: "https://twitter.com", tags: ["inspiration"] },
-  { _id: "3", title: "React 19 full course", type: "video", link: "https://youtube.com", tags: ["react", "dev"] },
-  { _id: "4", title: "Design systems explained", type: "article", link: "https://example.com", tags: ["design"] },
-  { _id: "5", title: "Lo-fi beats to code to", type: "audio", link: "https://example.com", tags: ["music", "focus"] },
-];
+const placeholderCards: ContentCardType[] = [];
 
-
-
-export default function Dashboard({ name, email } : {name?: string, email?: 
-  string} ){
+export default function Dashboard({ name, email } : {name?: string, email?: string} ){
 
   const navigate = useNavigate();
 

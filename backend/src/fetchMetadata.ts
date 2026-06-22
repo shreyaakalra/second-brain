@@ -17,6 +17,9 @@ export async function fetchMetadata(url: string): Promise<PreviewMetadata> {
     const previewDescription = $('meta[property="og:description"]').attr('content');
     const previewImage = $('meta[property="og:image"]').attr('content');
 
+    console.log("METADATA RESULT:", { previewTitle, previewDescription, previewImage }); 
+
+
     return {
         previewTitle,
         previewDescription,
