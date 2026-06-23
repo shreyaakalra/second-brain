@@ -13,7 +13,7 @@ export default function Hero() {
   const [inputVal, setInputVal] = useState("");
 
   return (
-    <section className="relative min-h-screen bg-white flex flex-col items-center justify-center overflow-hidden px-6 pt-16">
+    <section className="relative min-h-screen bg-white flex flex-col items-center justify-center overflow-hidden px-6">
 
       {/* Background grid */}
       <div
@@ -47,7 +47,7 @@ export default function Hero() {
 
       {/* Headline */}
       <motion.h1
-        {...fadeUp(0.2)}
+        {...fadeUp(0.4)}
         className="text-center text-6xl sm:text-7xl md:text-8xl font-black tracking-tighter text-black leading-none max-w-4xl"
       >
         Stop losing
@@ -59,7 +59,7 @@ export default function Hero() {
             className="absolute bottom-1 left-0 right-0 h-5 bg-yellow-400 -z-10 rounded-sm"
             initial={{ scaleX: 0 }}
             animate={{ scaleX: 1 }}
-            transition={{ duration: 0.6, delay: 0.7, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ duration: 1.0, delay: 0.7, ease: [0.22, 1, 0.36, 1] }}
             style={{ transformOrigin: "left" }}
           />
         </span>
