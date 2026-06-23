@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowRight, Sparkles } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const fadeUp = (delay = 0) => ({
   initial: { opacity: 0, y: 30 },
@@ -17,7 +17,7 @@ export default function Hero() {
 
       {/* Background grid */}
       <div
-        className="absolute inset-0 opacity-[0.04]"
+        className="absolute inset-0 opacity-[0.04] pointer-events-none"
         style={{
           backgroundImage:
             "linear-gradient(#000 1px, transparent 1px), linear-gradient(90deg, #000 1px, transparent 1px)",
@@ -27,12 +27,12 @@ export default function Hero() {
 
       {/* Yellow blob */}
       <motion.div
-        className="absolute top-20 right-[-100px] w-[500px] h-[500px] rounded-full bg-yellow-300 opacity-20 blur-3xl pointer-events-none"
+        className="absolute top-20 -right-25 w-125 h-125 rounded-full bg-yellow-300 opacity-20 blur-3xl pointer-events-none"
         animate={{ scale: [1, 1.1, 1], x: [0, 20, 0] }}
         transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
       />
       <motion.div
-        className="absolute bottom-10 left-[-80px] w-[350px] h-[350px] rounded-full bg-yellow-400 opacity-15 blur-3xl pointer-events-none"
+        className="absolute bottom-10 -left-20 w-87.5 h-87.5 rounded-full bg-yellow-400 opacity-15 blur-3xl pointer-events-none"
         animate={{ scale: [1, 1.15, 1], x: [0, -15, 0] }}
         transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 2 }}
       />
